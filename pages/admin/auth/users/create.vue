@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    
   </div>
 </template>
 
@@ -8,4 +8,6 @@
 
 </script>
 
-<style></style>
+<style>
+
+</style>
