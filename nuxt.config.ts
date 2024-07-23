@@ -3,11 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   modules: [
-    "@pinia/nuxt",
-    "@nuxtjs/tailwindcss",
-    "@nuxt/image",
-    "nuxt-mongoose",
     "@nuxt/eslint",
+    "@nuxt/image",
+    "@nuxtjs/i18n",
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "nuxt-mongoose",
   ],
   mongoose: {
     options: {},
