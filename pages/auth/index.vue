@@ -33,7 +33,8 @@
             </div>
 
             <div class="text-sm leading-6">
-              <a href="#" class="font-semibold text-orange-600 hover:text-orange-500">Forgot password?</a>
+              <NuxtLink to="/auth/forgot-password" class="font-semibold text-orange-600 hover:text-orange-500">Forgot
+                password?</NuxtLink>
             </div>
           </div>
 
@@ -91,8 +92,7 @@
         Diperhatikan dan diawasi oleh
       </p>
       <div class="flex gap-4 place-content-center pt-4">
-        <div><img src="/image/icons/third-part-satusehat.svg" class="w-full h-10" alt="image description">
-        </div>
+        <div><img src="/image/icons/third-part-satusehat.svg" class="w-full h-10" alt="image description"></div>
         <div><img src="/image/icons/third-part-kominfo.png" class="w-full h-10" alt="image description"></div>
       </div>
     </div>
@@ -101,7 +101,10 @@
 
 <script lang="ts" setup>
 useHead({
-  title: "Authorization e-Smart Clinic",
+  title: "Authorization | e-Smart Clinic",
+  link: [
+    { rel: 'icon', type: 'image/png', href: '/image/icons/e-smartclinic.png' }
+  ],
   bodyAttrs: {
     class: "h-full bg-gray-50"
   }
