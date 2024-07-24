@@ -1,27 +1,29 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md pt-4">
       <img class="mx-auto h-20 w-auto" src="/image/icons/e-smartclinic.svg" alt="e-Smart Clinicy" />
       <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-      <div class="px-6 py-12 sm:rounded-lg sm:px-12">
+      <div class="px-6 py-12 sm:px-12">
         <form class="space-y-6" action="#" method="POST">
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
             <div class="mt-2">
-              <input id="email" name="email" type="email" autocomplete="email" required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6" />
+              <input type="email" id="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+                placeholder="name@provider.com" required />
             </div>
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
             <div class="mt-2">
-              <input id="password" name="password" type="password" autocomplete="current-password" required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6" />
+              <input type="password" id="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+                required />
             </div>
           </div>
 
@@ -56,7 +58,7 @@
           </div>
 
           <div class="mt-6 grid grid-cols-2 gap-4">
-            <a href="#"
+            <button
               class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
               <svg class="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24">
                 <path
@@ -73,22 +75,22 @@
                   fill="#34A853" />
               </svg>
               <span class="text-sm font-semibold leading-6">Google</span>
-            </a>
+            </button>
 
-            <a href="#"
+            <button
               class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook"
-                viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                class="bi bi-facebook text-blue-700" viewBox="0 0 16 16">
                 <path
                   d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
               </svg>
               <span class="text-sm font-semibold leading-6">Facebook</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
 
-      <p class="mt-10 text-center text-sm text-gray-500 dark:text-white">
+      <p class="mt-10 text-center text-sm font-medium text-gray-500 dark:text-white">
         Diperhatikan dan diawasi oleh
       </p>
       <div class="flex gap-4 place-content-center pt-4">
@@ -103,11 +105,38 @@
 useHead({
   title: "Authorization | e-Smart Clinic",
   link: [
-    { rel: 'icon', type: 'image/png', href: '/image/icons/e-smartclinic.png' }
+    {
+      rel: "icon",
+      type: "image/png",
+      href: "/image/icons/e-smartclinic.png",
+    }, {
+      rel: "apple-touch-icon",
+      href: "https://e-smartclinic.id/storage/images/icons/icon.png",
+    },
   ],
   bodyAttrs: {
+    class: "h-full",
+  },
+  htmlAttrs: {
+    lang: "id_ID",
     class: "h-full bg-gray-50"
-  }
+  },
+
+})
+
+useSeoMeta({
+  charset: "utf-8",
+  googlebotNews: "noindex",
+  robots: "noindex,nofollow",
+  viewport: "width=device-width, initial-scale=1.0",
+  author: "PT Harmoni Untuk Bersama",
+  ogUrl: "https://e-smartclinic.id/welcome-aboard",
+  ogType: "website",
+  ogSiteName: "https://e-smartclinic.id",
+  ogTitle: "e-Smart Clinic Backend",
+  ogDescription: "The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.",
+  ogImage: "https://e-smartclinic.id/image/icons/meta-properti.webp",
+  ogLocale: "id_ID"
 })
 </script>
 

@@ -1,3 +1,10 @@
+import WorkerModel from "../models/_workers";
+
 export default defineEventHandler(async (event) => {
-  return "Hello Nitro";
+  try {
+    const result = await WorkerModel.find();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 });

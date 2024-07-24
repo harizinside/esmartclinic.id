@@ -30,4 +30,8 @@
   .content-auto {
     content-visibility: auto;
   }
+
+  .form-input {
+    @apply border;
+  }
 }
