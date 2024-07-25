@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
+    "nuxt-headlessui",
     "nuxt-mongoose",
   ],
   mongoose: {
@@ -17,5 +18,8 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
+  },
+  headlessui: {
+    prefix: "HI",
   },
 });

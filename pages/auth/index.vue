@@ -120,9 +120,8 @@ useHead({
   htmlAttrs: {
     lang: "id_ID",
     class: "h-full bg-gray-50"
-  },
-
-})
+  }
+});
 
 useSeoMeta({
   charset: "utf-8",
@@ -137,7 +136,7 @@ useSeoMeta({
   ogDescription: "The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.",
   ogImage: "https://e-smartclinic.id/image/icons/meta-properti.webp",
   ogLocale: "id_ID"
-})
+});
 </script>
 
 <style></style>

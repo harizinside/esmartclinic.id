@@ -25,10 +25,9 @@ WorkerSchema.statics.changeSex = async function (params: boolean) {
   const valueAwal = await this.aggregate();
 };
 
-const WorkerModel = defineMongooseModel<IWorkerModel>({
+export const WorkerModel = defineMongooseModel<IWorkerModel>({
   name: "_workers",
   schema: WorkerSchema,
 });
 
-export default WorkerModel;
 export { IWorker, WorkerSchema };

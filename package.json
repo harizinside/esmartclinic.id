@@ -14,7 +14,6 @@
     "vue": "latest"
   },
   "devDependencies": {
-    "@headlessui/vue": "^1.7.22",
     "@heroicons/vue": "^2.1.5",
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/image": "^1.7.0",
@@ -24,8 +23,10 @@
     "@tailwindcss/forms": "^0.5.7",
     "@vinejs/vine": "^2.1.0",
     "apexcharts": "^3.51.0",
+    "chart.js": "^4.4.3",
     "eslint": "^9.7.0",
     "flowbite": "^2.4.1",
+    "nuxt-headlessui": "^1.2.0",
     "nuxt-mongoose": "^1.0.6",
     "pinia": "^2.1.7"
   }
