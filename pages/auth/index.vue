@@ -100,6 +100,7 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue";
+const { $csrfFetch } = useNuxtApp()
 
 useHead({
   title: "Authorization | e-Smart Clinic",
@@ -145,7 +146,7 @@ const form = reactive({
 
 
 const handleSubmit = async () => {
-  const { data, pending, error, refresh } = await useCsrfFetch("/api/v1/oauth/sign-in", {
+  const { data } = await $csrfFetch("/api/v1/oauth/sign-in", {
     method: "POST",
     body: form
   });
