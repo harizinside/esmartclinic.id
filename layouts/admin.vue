@@ -49,11 +49,11 @@
                             </HIDisclosureButton>
                             <HIDisclosurePanel as="ul" class="mt-1 px-2">
                         <li v-for="subItem in item.children" :key="subItem.name">
-                          <HIDisclosureButton as="a" :href="subItem.href"
+                          <NuxtLink as="a" :to="subItem.href"
                             :class="[subItem.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
                             <ChevronRightIcon class="h-4 w-4 shrink-0 pt-1" aria-hidden="true" />
                             {{ subItem.name }}
-                          </HIDisclosureButton>
+                          </NuxtLink>
                         </li>
                         </HIDisclosurePanel>
                         </HIDisclosure>
@@ -119,11 +119,11 @@
                     </HIDisclosureButton>
                     <HIDisclosurePanel as="ul" class="mt-1 px-2">
                 <li v-for="subItem in item.children" :key="subItem.name">
-                  <HIDisclosureButton as="a" :href="subItem.href"
+                  <NuxtLink as="a" :to="subItem.href"
                     :class="[subItem.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
                     <ChevronRightIcon class="h-5 w-5 shrink-0 pt-1" aria-hidden="true" />
                     {{ subItem.name }}
-                  </HIDisclosureButton>
+                  </NuxtLink>
                 </li>
                 </HIDisclosurePanel>
                 </HIDisclosure>

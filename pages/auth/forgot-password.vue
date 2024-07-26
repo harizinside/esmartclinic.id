@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md pt-4">
-      <img class="mx-auto h-20 w-auto" src="/image/icons/e-smartclinic.svg" alt="e-Smart Clinicy" />
+      <img class="mx-auto h-20 w-auto" src="/image/icons/e-smartclinic.svg" alt="e-Smart Clinicy">
       <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Forgot password</h2>
     </div>
 
@@ -11,9 +11,9 @@
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
             <div class="mt-2">
-              <input type="email" id="email"
+              <input id="email" type="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
-                placeholder="name@provider.com" required />
+                placeholder="name@provider.com" required>
             </div>
           </div>
 
@@ -23,6 +23,12 @@
               Email</button>
           </div>
         </form>
+        <p class="mt-10 text-center text-sm text-gray-500">
+          Punya akun?
+          {{ ' ' }}
+          <NuxtLink to="/auth" class="font-semibold leading-6 text-orange-600 hover:text-orange-500">Masuk disini
+          </NuxtLink>
+        </p>
 
       </div>
 
