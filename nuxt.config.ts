@@ -22,4 +22,9 @@ export default defineNuxtConfig({
   headlessui: {
     prefix: "HI",
   },
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
 });
