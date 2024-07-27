@@ -1,32 +1,15 @@
-// @ts-check
-import withNuxt from "./.nuxt/eslint.config.mjs";
+import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
   // your custom flat configs go here, for example:
   {
     rules: {
-      "vue/first-attribute-linebreak": [
-        "warn",
-        {
-          singleline: "ignore",
-          multiline: "beside",
-        },
-      ],
-      "vue/max-attributes-per-line": [
-        "warn",
-        {
-          singleline: { max: 2 },
-          multiline: { max: 3 },
-        },
-      ],
-      "vue/html-closing-bracket-newline": [
-        "warn",
-        {
-          multiline: "never",
-        },
-      ],
-      "vue/html-indent": ["warn", 2],
+      'no-console': 'warn', // allow console.log in TypeScript files
+      'nuxt/prefer-import-meta': 'error',
+      'vue/first-attribute-linebreak': 'off',
+      'vue/max-attributes-per-line': 'off',
+      'vue/html-closing-bracket-newline': 'off',
+      'vue/html-indent': 'off',
     },
-  }
-);
-// Your custom configs here
+  },
+)
