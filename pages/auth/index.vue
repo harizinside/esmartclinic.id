@@ -2,7 +2,8 @@
   <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md pt-4">
       <img class="mx-auto h-20 w-auto" src="/image/icons/e-smartclinic.svg" alt="e-Smart Clinicy">
-      <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account
+      <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        Sign in to your account
       </h2>
     </div>
 
@@ -91,69 +92,72 @@
         Diperhatikan dan diawasi oleh
       </p>
       <div class="flex gap-4 place-content-center pt-4">
-        <div><img src="/image/icons/third-part-satusehat.svg" class="w-full h-10" alt="image description"></div>
-        <div><img src="/image/icons/third-part-kominfo.png" class="w-full h-10" alt="image description"></div>
+        <div>
+          <img src="/image/icons/third-part-satusehat.svg" class="w-full h-10" alt="image description">
+        </div>
+        <div>
+          <img src="/image/icons/third-part-kominfo.png" class="w-full h-10" alt="image description">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive } from 'vue'
+
 const { $csrfFetch } = useNuxtApp()
 
 useHead({
-  title: "Authorization | e-Smart Clinic",
+  title: 'Authorization | e-Smart Clinic',
   link: [
     {
-      rel: "icon",
-      type: "image/png",
-      href: "/image/icons/e-smartclinic.png",
+      rel: 'icon',
+      type: 'image/png',
+      href: '/image/icons/e-smartclinic.png',
     }, {
-      rel: "apple-touch-icon",
-      href: "https://e-smartclinic.id/storage/images/icons/icon.png",
+      rel: 'apple-touch-icon',
+      href: 'https://e-smartclinic.id/storage/images/icons/icon.png',
     },
   ],
   bodyAttrs: {
-    class: "h-full",
+    class: 'h-full',
   },
   htmlAttrs: {
-    lang: "id_ID",
-    class: "h-full bg-gray-50"
-  }
-});
+    lang: 'id_ID',
+    class: 'h-full bg-gray-50',
+  },
+})
 
 useSeoMeta({
-  charset: "utf-8",
-  googlebotNews: "noindex",
-  robots: "noindex,nofollow",
-  viewport: "width=device-width, initial-scale=1.0",
-  author: "PT Harmoni Untuk Bersama",
-  ogUrl: "https://e-smartclinic.id/welcome-aboard",
-  ogType: "website",
-  ogSiteName: "https://e-smartclinic.id",
-  ogTitle: "e-Smart Clinic Backend",
-  ogDescription: "The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.",
-  ogImage: "https://e-smartclinic.id/image/icons/meta-properti.webp",
-  ogLocale: "id_ID"
-});
+  charset: 'utf-8',
+  googlebotNews: 'noindex',
+  robots: 'noindex,nofollow',
+  viewport: 'width=device-width, initial-scale=1.0',
+  author: 'PT Harmoni Untuk Bersama',
+  ogUrl: 'https://e-smartclinic.id/welcome-aboard',
+  ogType: 'website',
+  ogSiteName: 'https://e-smartclinic.id',
+  ogTitle: 'e-Smart Clinic Backend',
+  ogDescription: 'The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.',
+  ogImage: 'https://e-smartclinic.id/image/icons/meta-properti.webp',
+  ogLocale: 'id_ID',
+})
 
 const form = reactive({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
   remember: false,
-});
-
+})
 
 const handleSubmit = async () => {
-  const { data } = await $csrfFetch("/api/v1/oauth/sign-in", {
-    method: "POST",
-    body: form
-  });
+  const { data } = await $csrfFetch('/api/v1/oauth/sign-in', {
+    method: 'POST',
+    body: form,
+  })
 
   console.log(data)
 }
-
 </script>
 
 <style></style>

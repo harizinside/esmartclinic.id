@@ -61,9 +61,10 @@
                   </ul>
                   </li>
 
-
                   <li>
-                    <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                    <div class="text-xs font-semibold leading-6 text-gray-400">
+                      Your teams
+                    </div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                       <li v-for="team in teams" :key="team.name">
                         <NuxtLink :to="team.href"
@@ -132,7 +133,9 @@
           </li>
 
           <li>
-            <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+            <div class="text-xs font-semibold leading-6 text-gray-400">
+              Your teams
+            </div>
             <ul role="list" class="-mx-2 mt-2 space-y-1">
               <li v-for="team in teams" :key="team.name">
                 <NuxtLink :to="team.href"
@@ -220,7 +223,6 @@
       </div>
 
       <main class="py-10">
-
         <div class="px-4 sm:px-6 lg:px-8">
           <nav class="flex" aria-label="Breadcrumb">
             <ol role="list" class="flex items-center space-x-4">
@@ -270,43 +272,43 @@ import {
   Squares2X2Icon,
   ChartBarIcon,
   VariableIcon,
-  CalculatorIcon
+  CalculatorIcon,
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 
 useHead({
   link: [
     {
-      rel: "icon",
-      type: "image/png",
-      href: "/image/icons/e-smartclinic.png",
+      rel: 'icon',
+      type: 'image/png',
+      href: '/image/icons/e-smartclinic.png',
     }, {
-      rel: "apple-touch-icon",
-      href: "https://e-smartclinic.id/storage/images/icons/icon.png",
+      rel: 'apple-touch-icon',
+      href: 'https://e-smartclinic.id/storage/images/icons/icon.png',
     },
   ],
   bodyAttrs: {
-    class: "h-full",
+    class: 'h-full',
   },
   htmlAttrs: {
-    lang: "id_ID",
-    class: "h-full bg-white"
-  }
-});
+    lang: 'id_ID',
+    class: 'h-full bg-white',
+  },
+})
 
 useSeoMeta({
-  charset: "utf-8",
-  googlebotNews: "noindex",
-  robots: "noindex,nofollow",
-  viewport: "width=device-width, initial-scale=1.0",
-  author: "PT Harmoni Untuk Bersama",
-  ogUrl: "https://e-smartclinic.id/welcome-aboard",
-  ogType: "website",
-  ogSiteName: "https://e-smartclinic.id",
-  ogTitle: "e-Smart Clinic Backend",
-  ogDescription: "The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.",
-  ogImage: "https://e-smartclinic.id/image/icons/meta-properti.webp",
-  ogLocale: "id_ID"
+  charset: 'utf-8',
+  googlebotNews: 'noindex',
+  robots: 'noindex,nofollow',
+  viewport: 'width=device-width, initial-scale=1.0',
+  author: 'PT Harmoni Untuk Bersama',
+  ogUrl: 'https://e-smartclinic.id/welcome-aboard',
+  ogType: 'website',
+  ogSiteName: 'https://e-smartclinic.id',
+  ogTitle: 'e-Smart Clinic Backend',
+  ogDescription: 'The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.',
+  ogImage: 'https://e-smartclinic.id/image/icons/meta-properti.webp',
+  ogLocale: 'id_ID',
 })
 
 const navigation = [
@@ -403,7 +405,6 @@ const pages = [
 ]
 
 const sidebarOpen = ref(false)
-
 </script>
 
 <style></style>

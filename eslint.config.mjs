@@ -12,6 +12,20 @@ export default withNuxt(
           multiline: "beside",
         },
       ],
+      "vue/max-attributes-per-line": [
+        "warn",
+        {
+          singleline: { max: 2 },
+          multiline: { max: 3 },
+        },
+      ],
+      "vue/html-closing-bracket-newline": [
+        "warn",
+        {
+          multiline: "never",
+        },
+      ],
+      "vue/html-indent": ["warn", 2],
     },
   }
 );
