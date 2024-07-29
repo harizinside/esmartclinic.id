@@ -1,23 +1,26 @@
-import { Schema, model, Document } from "mongoose";
+import type { Document } from 'mongoose'
+import { Schema } from 'mongoose'
+import { defineMongooseModel } from '#nuxt/mongoose'
 
-interface IReligion {
-  value: string;
-  updatedAt: Date;
+interface IReligion extends Document {
+  value: string
+  updatedAt: Date
 }
 
-const ReligionSchema = new Schema(
+const ReligionSchema = new Schema<IReligion>(
   {
-    value: { type: String },
+    value: { type: String, required: true },
     updatedAt: { type: Date },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
-);
+  },
+)
 
-interface ReligionDocument extends Document, IReligion {}
-const ReligionModel = model<ReligionDocument>("_religions", ReligionSchema);
+export const ReligionModel = defineMongooseModel<IReligion>({
+  name: '_religions',
+  schema: ReligionSchema,
+})
 
-export default ReligionModel;
-export { ReligionDocument, ReligionSchema };
+export { IReligion, ReligionSchema }

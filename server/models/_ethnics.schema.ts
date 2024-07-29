@@ -1,23 +1,26 @@
-import { Schema, model, Document } from "mongoose";
+import type { Document } from 'mongoose'
+import { Schema } from 'mongoose'
+import { defineMongooseModel } from '#nuxt/mongoose'
 
-interface IEthnic {
-  value: string;
-  updatedAt: Date;
+interface IEthnic extends Document {
+  value: string
+  updatedAt: Date
 }
 
-const EthnicSchema = new Schema(
+const EthnicSchema = new Schema<IEthnic>(
   {
-    value: { type: String },
+    value: { type: String, required: true },
     updatedAt: { type: Date },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
-);
+  },
+)
 
-interface EthnicDocument extends Document, IEthnic {}
-const EthnicModel = model<EthnicDocument>("_ethnics", EthnicSchema);
+export const EthnicModel = defineMongooseModel<IEthnic>({
+  name: '_ethnics',
+  schema: EthnicSchema,
+})
 
-export default EthnicModel;
-export { EthnicDocument, EthnicSchema };
+export { IEthnic, EthnicSchema }

@@ -1,51 +1,94 @@
-import vine, { errors } from "@vinejs/vine";
-import { createError, sendError } from "h3";
+import { z } from 'zod'
+
+interface ILogin {
+  status: boolean
+  message: string
+  result?: IResult
+  errors?: IError[]
+}
+
+interface IResult {
+  company: string
+  id: number
+  role: string
+  roleId: number
+  sessions: ISessions[]
+  token: string
+  validPassword: boolean
+}
+
+interface ISessions {
+  id: string
+  site: string | null
+  ip: string
+  ua: string | null
+  browser: {
+    name: string
+    version: string
+    major: string
+  }
+  cpu: {
+    architecture: string | null
+  }
+  device: {
+    kind: string
+    model: string
+    vendor: string
+  }
+  engine: {
+    name: string
+    version: string
+  }
+  os: {
+    name: string
+    version: string
+  }
+}
+
+interface IError {
+  received?: string
+  validation?: string
+  code: string
+  minimum?: string
+  type?: string
+  inclusive?: boolean
+  exact?: boolean
+  options?: string[]
+  message: string
+  path: string[]
+  field: string
+  value?: string
+};
 
 export default defineEventHandler(async (event) => {
-  const data = await readBody(event);
-  const contentType = getRequestHeaders(event);
-
-  console.log(contentType);
-
-  try {
-    const validator = vine.compile(
-      vine.object({
-        email: vine.string().email(),
-        password: vine.string().minLength(6).maxLength(32),
-      })
-    );
-
-    await validator.validate(data);
-
-    const response = await $fetch(`${process.env.API_URL}/legacy/auth/login`, {
-      method: "POST",
-      headers: {
-        Authorization: `${process.env.API_KEY}`,
-        Accept: "application/json",
-        "Accept-Language": "id",
-        "Content-Type": "application/json",
-        "User-Agent": "",
-        Origin: "esmartclinic.id",
-      },
-      body: JSON.stringify({
-        username: data.email,
-        password: data.password,
-      }),
-    });
-
-    return response;
-  } catch (err) {
-    if (err instanceof errors.E_VALIDATION_ERROR) {
-      // Create an error response with a 422 status code and the validation messages
-      const errorResponse = createError({
-        status: 422,
-        statusMessage: "Validation Error",
-        data: err.messages,
-      });
-      // Send the error response
-      return sendError(event, errorResponse);
-    }
-    // For other types of errors, throw them to be handled by the global error handler
-    throw err;
+  const XHEADER = getRequestHeaders(event)
+  const IHEADER = {
+    'Authorization': `${process.env.API_KEY}`,
+    'Accept': 'application/json',
+    'Accept-Language': 'id',
+    'Content-Type': 'application/json',
+    'Origin': 'esmartclinic.id',
+    'User-Agent': XHEADER['User-Agent'] ?? 'Simpleplan',
   }
-});
+
+  const userSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+    remember: z.boolean(),
+  })
+
+  const body = await readValidatedBody(event, userSchema.parse)
+
+  const response: ILogin = await $fetch(`${process.env.API_URL}/legacy/auth/login`, {
+    method: 'POST',
+    headers: IHEADER,
+    body: JSON.stringify({
+      username: body.email,
+      password: body.password,
+    }),
+  })
+
+  if (response.status) {}
+
+  return response
+})

@@ -1,23 +1,26 @@
-import { Schema, model, Document } from "mongoose";
+import type { Document } from 'mongoose'
+import { Schema } from 'mongoose'
+import { defineMongooseModel } from '#nuxt/mongoose'
 
-interface ITitle {
-  value: string;
-  updatedAt: Date;
+interface ITitle extends Document {
+  value: string
+  updatedAt: Date
 }
 
-const TitleSchema = new Schema(
+const TitleSchema = new Schema<ITitle>(
   {
-    value: { type: String },
+    value: { type: String, required: true },
     updatedAt: { type: Date },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
-);
+  },
+)
 
-interface TitleDocument extends Document, ITitle {}
-const TitleModel = model<TitleDocument>("_titles", TitleSchema);
+export const TitleModel = defineMongooseModel<ITitle>({
+  name: '_titles',
+  schema: TitleSchema,
+})
 
-export default TitleModel;
-export { TitleDocument, TitleSchema };
+export { ITitle, TitleSchema }

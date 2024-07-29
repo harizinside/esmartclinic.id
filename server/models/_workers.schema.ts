@@ -1,13 +1,10 @@
-import { defineMongooseModel } from "#nuxt/mongoose";
-import { Schema, Document, Model } from "mongoose";
+import type { Document } from 'mongoose'
+import { Schema } from 'mongoose'
+import { defineMongooseModel } from '#nuxt/mongoose'
 
 interface IWorker extends Document {
-  value: string;
-  updatedAt: Date;
-}
-
-interface IWorkerModel extends Model<IWorker> {
-  changeSex(): string;
+  value: string
+  updatedAt: Date
 }
 
 const WorkerSchema = new Schema<IWorker>(
@@ -18,16 +15,12 @@ const WorkerSchema = new Schema<IWorker>(
   {
     timestamps: true,
     versionKey: false,
-  }
-);
+  },
+)
 
-WorkerSchema.statics.changeSex = async function (params: boolean) {
-  const valueAwal = await this.aggregate();
-};
-
-export const WorkerModel = defineMongooseModel<IWorkerModel>({
-  name: "_workers",
+export const WorkerModel = defineMongooseModel<IWorker>({
+  name: '_workers',
   schema: WorkerSchema,
-});
+})
 
-export { IWorker, WorkerSchema };
+export { IWorker, WorkerSchema }

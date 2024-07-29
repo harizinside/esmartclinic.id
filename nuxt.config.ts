@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     // Generated at build time for SEO purpose
     '/': { prerender: true },
     // Cached for 1 hour
-    '/api/*': { cache: { maxAge: 60 * 60 } },
+    // '/api/*': { cache: { maxAge: 60 * 60 } },
   },
   modules: [
     '@nuxt/eslint',
@@ -14,8 +14,10 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
     'nuxt-csurf',
     'nuxt-headlessui',
+    'nuxt-lodash',
     'nuxt-mongoose',
   ],
   mongoose: {
