@@ -1,3 +1,3 @@
 export const useMetaHeader = () => {
-  return ref({});
-};
+  return ref({})
+}

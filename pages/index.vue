@@ -1,6 +1,8 @@
 <template>
   <div class="font-semibold">
-    <input type="date" class="input-normal input-default">
+    <input
+      type="date"
+      class="input-normal input-default">
     {{ formatNumber(1234) }}
     {{ $t('welcome') }}
   </div>
