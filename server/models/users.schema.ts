@@ -1,11 +1,20 @@
 import type { Document, Types } from 'mongoose'
 import { Schema } from 'mongoose'
 import { TitleModel } from './_titles.schema'
+import { VillageModel } from './_villages.schema'
+import { ReligionModel } from './_religions.schema'
+import { MaritalModel } from './_maritals.schema'
+import { WorkerModel } from './_workers.schema'
+import { BranchModel } from './branchs.schema'
+import { EducationModel } from './_educations.schema'
+import { EthnicModel } from './_ethnics.schema'
+import { TypeModel } from './_types.schema'
 import { defineMongooseModel } from '#nuxt/mongoose'
 
 interface IUsers extends Document {
   medicalRecord: string | null
   registerRecord: string
+  titleId: Types.ObjectId
   name: string
   email: {
     value: string
@@ -22,7 +31,6 @@ interface IUsers extends Document {
     value: string
     path: string
   }
-  titleId: Types.ObjectId
   birth: {
     location: string
     date: Date | null
@@ -33,6 +41,7 @@ interface IUsers extends Document {
     type: 'A' | 'B' | 'AB' | 'BA' | '0'
   }
   address: {
+    type: 'HOME' | 'WORK'
     address: string
     rt: number
     rw: number
@@ -43,17 +52,16 @@ interface IUsers extends Document {
   maritalStatusId: Types.ObjectId | null
   workingStatusId: Types.ObjectId | null
   citizenshipStatus: 'WNI' | 'WNA'
+  branchId: Types.ObjectId | null
   educationId: Types.ObjectId | null
   ethnicGroupId: Types.ObjectId | null
   typesId: Types.ObjectId | null
-  marketingId: Types.ObjectId | null
-  branchId: Types.ObjectId | null
   interface: boolean | null // 1 Light | 0 Dark
   language: 'en' | 'id' | null
-  createdId: number | null
-  updatedId: number | null
+  createdId: Types.ObjectId | null
+  updatedId: Types.ObjectId | null
   updatedReson: string | null
-  deletedId: number | null
+  deletedId: Types.ObjectId | null
   deletedAt: Date | null
   deletedReason: string | null
 }
@@ -79,6 +87,39 @@ const UserSchema = new Schema<IUsers>(
       value: { type: String },
       path: { type: String },
     },
+    birth: {
+      location: { type: String, required: true },
+      date: { type: Date, required: true },
+    },
+    sex: { type: Boolean },
+    blood: {
+      rhesus: { type: Boolean },
+      type: { type: String, enum: ['A', 'B', 'AB', 'BA', '0'] },
+    },
+    address: {
+      type: { type: String, enum: ['HOME', 'WORK'] },
+      address: { type: String },
+      rt: { type: Number },
+      rw: { type: Number },
+      villageId: { type: 'ObjectId', ref: VillageModel, required: true },
+      coordinate: [{ type: String }],
+    },
+    religionId: { type: 'ObjectId', ref: ReligionModel },
+    maritalStatusId: { type: 'ObjectId', ref: MaritalModel },
+    workingStatusId: { type: 'ObjectId', ref: WorkerModel },
+    citizenshipStatus: { type: String, enum: ['WNI', 'WNA'] },
+    branchId: { type: 'ObjectId', ref: BranchModel, required: true },
+    educationId: { type: 'ObjectId', ref: EducationModel },
+    ethnicGroupId: { type: 'ObjectId', ref: EthnicModel },
+    typesId: { type: 'ObjectId', ref: TypeModel },
+    interface: { type: Boolean, default: true },
+    language: { type: String, enum: ['en', 'id'], default: 'id' },
+    createdId: { type: 'ObjectId', ref: 'users' },
+    updatedId: { type: 'ObjectId', ref: 'users' },
+    updatedReson: { type: String },
+    deletedId: { type: 'ObjectId', ref: 'users' },
+    deletedAt: { type: Date },
+    deletedReason: { type: String },
   },
   {
     timestamps: true,
@@ -87,7 +128,7 @@ const UserSchema = new Schema<IUsers>(
 )
 
 export const UserModel = defineMongooseModel<IUsers>({
-  name: 'users',
+  name: '_banks',
   schema: UserSchema,
 })
 
