@@ -27,7 +27,7 @@ const IcdSchema = new Schema<IIcd>(
 )
 
 export const IcdModel = defineMongooseModel<IIcd>({
-  name: '_Icds',
+  name: '_icds',
   schema: IcdSchema,
 })
 

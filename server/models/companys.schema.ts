@@ -47,7 +47,7 @@ const ComanySchema = new Schema<IComany>(
 )
 
 export const ComanyModel = defineMongooseModel<IComany>({
-  name: '_comanys',
+  name: 'comanys',
   schema: ComanySchema,
 })
 

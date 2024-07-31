@@ -67,7 +67,7 @@ const BranchSchema = new Schema<IBranch>(
 )
 
 export const BranchModel = defineMongooseModel<IBranch>({
-  name: '_branchs',
+  name: 'branchs',
   schema: BranchSchema,
 })
 

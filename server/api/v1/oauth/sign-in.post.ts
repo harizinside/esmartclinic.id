@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
     'Accept-Language': 'id',
     'Content-Type': 'application/json',
     'Origin': 'esmartclinic.id',
-    'User-Agent': XHEADER['User-Agent'] ?? 'Simpleplan',
+    'User-Agent': XHEADER['User-Agent']!,
   }
 
   const userSchema = z.object({
@@ -88,7 +88,9 @@ export default defineEventHandler(async (event) => {
     }),
   })
 
-  if (response.status) {}
+  if (response.status) {
+    return response.result
+  }
 
   return response
 })

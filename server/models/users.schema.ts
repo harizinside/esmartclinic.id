@@ -128,7 +128,7 @@ const UserSchema = new Schema<IUsers>(
 )
 
 export const UserModel = defineMongooseModel<IUsers>({
-  name: '_banks',
+  name: 'users',
   schema: UserSchema,
 })
 
