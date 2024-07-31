@@ -23,7 +23,7 @@ const InsuranceSchema = new Schema<IInsurance>(
 )
 
 export const InsuranceModel = defineMongooseModel<IInsurance>({
-  name: 'insurance',
+  name: 'insurances',
   schema: InsuranceSchema,
 })
 

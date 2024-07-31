@@ -157,6 +157,7 @@ import { reactive } from 'vue'
 
 const { $csrfFetch } = useNuxtApp()
 const router = useRouter()
+const auth = useAuthStore()
 
 useHead({
   title: 'Authorization | e-Smart Clinic',
@@ -195,19 +196,21 @@ useSeoMeta({
 })
 
 const form = reactive({
-  email: '',
-  password: '',
+  email: null,
+  password: null,
   remember: false,
 })
 
 const handleSubmit = async () => {
-  // router.push({ path: '/admin' })
-  const { data } = await $csrfFetch('/api/v1/oauth/sign-in', {
+  const data = await $csrfFetch('/api/v1/oauth/sign-in', {
     method: 'POST',
     body: form,
   })
 
-  console.log(data)
+  if (data.status) {
+    await auth.signin(data.user, data.token)
+    router.push({ path: '/admin' })
+  }
 }
 </script>
 

@@ -8,7 +8,7 @@ import { WorkerModel } from './_workers.schema'
 import { BranchModel } from './branchs.schema'
 import { EducationModel } from './_educations.schema'
 import { EthnicModel } from './_ethnics.schema'
-import { InsuranceModel } from './insurance.schema'
+import { InsuranceModel } from './insurances.schema'
 import { defineMongooseModel } from '#nuxt/mongoose'
 
 interface IUsers extends Document {
@@ -25,6 +25,7 @@ interface IUsers extends Document {
     date: Date | null
   }
   password: string | null
+  rememberToken: string | null
   path: string | null // Avatar
   identified: {
     category: 'KTP' | 'VISA' | 'PASSPORT' | null
@@ -81,6 +82,7 @@ const UserSchema = new Schema<IUsers>(
       date: { type: Date },
     },
     password: { type: String },
+    rememberToken: { type: String },
     path: { type: String },
     identified: {
       category: { type: String, enum: ['KTP', 'VISA', 'PASSPORT'] },
