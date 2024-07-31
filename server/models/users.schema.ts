@@ -8,7 +8,7 @@ import { WorkerModel } from './_workers.schema'
 import { BranchModel } from './branchs.schema'
 import { EducationModel } from './_educations.schema'
 import { EthnicModel } from './_ethnics.schema'
-import { TypeModel } from './_types.schema'
+import { InsuranceModel } from './insurance.schema'
 import { defineMongooseModel } from '#nuxt/mongoose'
 
 interface IUsers extends Document {
@@ -55,7 +55,7 @@ interface IUsers extends Document {
   branchId: Types.ObjectId | null
   educationId: Types.ObjectId | null
   ethnicGroupId: Types.ObjectId | null
-  typesId: Types.ObjectId | null
+  insuranceId: Types.ObjectId | null
   interface: boolean | null // 1 Light | 0 Dark
   language: 'en' | 'id' | null
   createdId: Types.ObjectId | null
@@ -111,7 +111,7 @@ const UserSchema = new Schema<IUsers>(
     branchId: { type: 'ObjectId', ref: BranchModel, required: true },
     educationId: { type: 'ObjectId', ref: EducationModel },
     ethnicGroupId: { type: 'ObjectId', ref: EthnicModel },
-    typesId: { type: 'ObjectId', ref: TypeModel },
+    insuranceId: { type: 'ObjectId', ref: InsuranceModel },
     interface: { type: Boolean, default: true },
     language: { type: String, enum: ['en', 'id'], default: 'id' },
     createdId: { type: 'ObjectId', ref: 'users' },
