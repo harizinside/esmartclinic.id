@@ -423,6 +423,9 @@ import {
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 
+const router = useRouter()
+const auth = useAuthStore()
+
 useHead({
   link: [
     {
@@ -542,16 +545,21 @@ const teams = [
   { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
 ]
 
+const pages = [
+  { name: 'Dashboard', href: '#', current: false },
+]
+
 const userNavigation = [
   { name: 'Your profile', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
 
-const pages = [
-  { name: 'Dashboard', href: '#', current: false },
-]
-
 const sidebarOpen = ref(false)
+
+const signOut = async () => {
+  await auth.signout
+  router.push({ path: '/auth' })
+}
 </script>
 
 <style></style>
