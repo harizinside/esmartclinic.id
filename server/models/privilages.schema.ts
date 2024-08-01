@@ -38,7 +38,7 @@ const PrevilageSchema = new Schema<IPrevilage>(
       export: { type: Boolean, required: true, default: false },
     }],
     users: [{
-      userId: { type: UserModel, required: true },
+      userId: { type: 'ObjectId', ref: UserModel, required: true },
       status: { type: Boolean },
     }],
     group: { type: String },
