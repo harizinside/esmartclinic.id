@@ -1,14 +1,13 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IProvince extends Document {
+interface ProvinceProps {
   code: string
   name: string
   updatedAt: Date
 }
 
-const ProvinceSchema = new Schema<IProvince>(
+const ProvinceSchema = new Schema(
   {
     code: { type: String, required: true },
     name: { type: String, required: true },
@@ -20,9 +19,8 @@ const ProvinceSchema = new Schema<IProvince>(
   },
 )
 
-export const ProvinceModel = defineMongooseModel<IProvince>({
-  name: '_provinces',
-  schema: ProvinceSchema,
-})
+interface ProvinceDocument extends Document, ProvinceProps { }
+const ProvinceModel = model< ProvinceDocument>('_provinces', ProvinceSchema)
 
-export { IProvince, ProvinceSchema }
+export default ProvinceModel
+export { ProvinceDocument, ProvinceSchema }

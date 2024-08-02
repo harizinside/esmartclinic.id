@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IMarital extends Document {
+interface MaritalProps extends Document {
   value: string
   updatedAt: Date
 }
 
-const MaritalSchema = new Schema<IMarital>(
+const MaritalSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const MaritalSchema = new Schema<IMarital>(
   },
 )
 
-export const MaritalModel = defineMongooseModel<IMarital>({
-  name: '_maritals',
-  schema: MaritalSchema,
-})
+interface MaritalDocument extends Document, MaritalProps { }
+const MaritalModel = model<MaritalDocument>('_maritals', MaritalSchema)
 
-export { IMarital, MaritalSchema }
+export default MaritalModel
+export { MaritalDocument, MaritalSchema }

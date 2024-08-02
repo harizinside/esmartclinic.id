@@ -1,8 +1,7 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IIcd extends Document {
+interface IcdProps extends Document {
   type: 'ICD10' | 'ICD9'
   code: string
   str: string
@@ -11,7 +10,7 @@ interface IIcd extends Document {
   updatedAt: Date
 }
 
-const IcdSchema = new Schema<IIcd>(
+const IcdSchema = new Schema(
   {
     type: { type: String, required: true },
     code: { type: String },
@@ -26,9 +25,8 @@ const IcdSchema = new Schema<IIcd>(
   },
 )
 
-export const IcdModel = defineMongooseModel<IIcd>({
-  name: '_icds',
-  schema: IcdSchema,
-})
+interface IcdDocument extends Document, IcdProps { }
+const IcdModel = model<IcdDocument>('_icds', IcdSchema)
 
-export { IIcd, IcdSchema }
+export default IcdModel
+export { IcdDocument, IcdSchema }

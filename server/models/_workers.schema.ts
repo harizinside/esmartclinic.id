@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IWorker extends Document {
+interface WorkerProps {
   value: string
   updatedAt: Date
 }
 
-const WorkerSchema = new Schema<IWorker>(
+const WorkerSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const WorkerSchema = new Schema<IWorker>(
   },
 )
 
-export const WorkerModel = defineMongooseModel<IWorker>({
-  name: '_workers',
-  schema: WorkerSchema,
-})
+interface WorkerDocument extends Document, WorkerProps { }
+const WorkerModel = model<WorkerDocument>('_workers', WorkerSchema)
 
-export { IWorker, WorkerSchema }
+export default WorkerModel
+export { WorkerDocument, WorkerSchema }

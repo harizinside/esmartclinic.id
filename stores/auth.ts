@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
-import type { Ref } from 'vue'
 import { ref } from 'vue'
 
 interface IState {
-  id: Ref<string | null>
-  user: Ref<IUser | null>
-  token: Ref<string | null>
+  id: string | null
+  user: IUser | null
+  token: string | null
 }
 
 interface IUser {
-  name: Ref<string | null>
-  path: Ref<string | null>
+  name: string | null
+  path: string | null
 }
 
 interface IResponse {
@@ -20,34 +19,31 @@ interface IResponse {
   _id: string
 }
 
-export const useAuthStore = defineStore('auth', {
-  state: (): IState => {
-    return {
-      id: ref(null),
-      user: ref(null),
-      token: ref(null),
+export const useAuthStore = defineStore('__auth', () => {
+  const authState = ref<IState>({
+    id: null,
+    user: null,
+    token: null,
+  })
+
+  const useSignIn = (args: IResponse, token: string) => {
+    authState.value.id = args._id
+    authState.value.token = token
+    authState.value.user = {
+      name: args.name,
+      path: args.path,
     }
-  },
-  actions: {
-    signin(args: IResponse, token: string) {
-      this.id = args._id
-      this.token = token
-      this.user = {
-        name: ref(args.name),
-        path: ref(args.path),
-      }
-    },
-    signout() {
-      this.id = null
-      this.token = null
-      this.user = null
-    },
-  },
-  getters: {
-    getUsers: state => state.user,
-    getToken: state => state.token,
-    getId: state => state.id,
-  },
+  }
+
+  const useSignOut = () => {
+    authState.value.id = null
+    authState.value.token = null
+    authState.value.user = null
+  }
+
+  return { authState, useSignIn, useSignOut }
+},
+{
   persist: {
     storage: persistedState.localStorage,
   },

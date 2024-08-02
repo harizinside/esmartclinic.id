@@ -1,8 +1,7 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IComany extends Document {
+interface ComanyProps extends Document {
   type: 'PT' | 'CV' | 'Firma' | null
   name: string
   phone: string
@@ -34,7 +33,7 @@ interface IComany extends Document {
   updatedAt: Date
 }
 
-const ComanySchema = new Schema<IComany>(
+const ComanySchema = new Schema(
   {
     type: { type: String, required: true },
     name: { type: String, required: true },
@@ -46,9 +45,8 @@ const ComanySchema = new Schema<IComany>(
   },
 )
 
-export const ComanyModel = defineMongooseModel<IComany>({
-  name: 'comanys',
-  schema: ComanySchema,
-})
+interface ComanyDocument extends Document, ComanyProps { }
+const ComanyModel = model<ComanyDocument>('comanys', ComanySchema)
 
-export { IComany, ComanySchema }
+export default ComanyModel
+export { ComanyDocument, ComanySchema }

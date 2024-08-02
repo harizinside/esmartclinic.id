@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IEducation extends Document {
+interface EducationProps extends Document {
   value: string
   updatedAt: Date
 }
 
-const EducationSchema = new Schema<IEducation>(
+const EducationSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const EducationSchema = new Schema<IEducation>(
   },
 )
 
-export const EducationModel = defineMongooseModel<IEducation>({
-  name: '_educations',
-  schema: EducationSchema,
-})
+interface EducationDocument extends Document, EducationProps { }
+const EducationModel = model<EducationDocument>('_educations', EducationSchema)
 
-export { IEducation, EducationSchema }
+export default EducationModel
+export { EducationDocument, EducationSchema }

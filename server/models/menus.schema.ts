@@ -1,8 +1,7 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IMenu extends Document {
+interface MenuProps extends Document {
   name: string
   icon: string
   status: boolean
@@ -18,7 +17,7 @@ interface IMenu extends Document {
   updatedAt: Date
 }
 
-const MenuSchema = new Schema<IMenu>(
+const MenuSchema = new Schema(
   {
     name: { type: String, required: true },
     icon: { type: String, required: true },
@@ -40,9 +39,8 @@ const MenuSchema = new Schema<IMenu>(
   },
 )
 
-export const MenuModel = defineMongooseModel<IMenu>({
-  name: 'menus',
-  schema: MenuSchema,
-})
+interface MenuDocument extends Document, MenuProps { }
+const MenuModel = model<MenuDocument>('menus', MenuSchema)
 
-export { IMenu, MenuSchema }
+export default MenuModel
+export { MenuDocument, MenuSchema }

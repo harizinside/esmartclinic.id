@@ -1,10 +1,9 @@
 import type { Document, Types } from 'mongoose'
-import { Schema } from 'mongoose'
-import { MenuModel } from './menus.schema'
-import { UserModel } from './users.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import MenuModel from './menus.schema'
+import UserModel from './users.schema'
 
-interface IPrevilage extends Document {
+interface PrevilageProps extends Document {
   name: string
   category: 'dashboard' | 'users'
   menu: {
@@ -24,7 +23,7 @@ interface IPrevilage extends Document {
   updatedAt: Date
 }
 
-const PrevilageSchema = new Schema<IPrevilage>(
+const PrevilageSchema = new Schema(
   {
     name: { type: String },
     category: { type: String, enum: ['dashboard', 'users'] },
@@ -50,9 +49,8 @@ const PrevilageSchema = new Schema<IPrevilage>(
   },
 )
 
-export const PrevilageModel = defineMongooseModel<IPrevilage>({
-  name: 'previlages',
-  schema: PrevilageSchema,
-})
+interface PrevilageDocument extends Document, PrevilageProps { }
+const PrevilageModel = model<PrevilageDocument>('previlages', PrevilageSchema)
 
-export { IPrevilage, PrevilageSchema }
+export default PrevilageModel
+export { PrevilageDocument, PrevilageSchema }

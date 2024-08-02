@@ -181,9 +181,9 @@ useHead({
 })
 
 useSeoMeta({
+  description: 'The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.',
   charset: 'utf-8',
   googlebotNews: 'noindex',
-  robots: 'noindex,nofollow',
   viewport: 'width=device-width, initial-scale=1.0',
   author: 'PT Harmoni Untuk Bersama',
   ogUrl: 'https://e-smartclinic.id/welcome-aboard',
@@ -193,6 +193,14 @@ useSeoMeta({
   ogDescription: 'The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.',
   ogImage: 'https://e-smartclinic.id/image/icons/meta-properti.webp',
   ogLocale: 'id_ID',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'e-Smart Clinic Backend',
+  twitterDescription: 'The Backend Dashboard with Medical Record support to all our beloved clinet of e-Smart Clinic for all Branchs & Market around the Indonesia.',
+  twitterImage: 'https://e-smartclinic.id/image/icons/meta-properti.webp',
+})
+
+useServerSeoMeta({
+  robots: 'noindex, nofollow',
 })
 
 const form = reactive({
@@ -208,7 +216,7 @@ const handleSubmit = async () => {
   })
 
   if (data.status) {
-    await auth.signin(data.user, data.token)
+    await auth.useSignIn(data.user, data.token)
     router.push({ path: '/admin' })
   }
 }

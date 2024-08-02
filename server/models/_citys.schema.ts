@@ -1,16 +1,15 @@
 import type { Document, Types } from 'mongoose'
-import { Schema } from 'mongoose'
-import { ProvinceModel } from './_provinces.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import ProvinceModel from './_provinces.schema'
 
-interface ICity extends Document {
+interface CityProps {
   provinceId: Types.ObjectId
   code: string
   name: string
   updatedAt: Date
 }
 
-const CitySchema = new Schema<ICity>(
+const CitySchema = new Schema(
   {
     provinceId: { type: 'ObjectId', ref: ProvinceModel, required: true },
     code: { type: String, required: true },
@@ -23,9 +22,8 @@ const CitySchema = new Schema<ICity>(
   },
 )
 
-export const CityModel = defineMongooseModel<ICity>({
-  name: '_citys',
-  schema: CitySchema,
-})
+interface CityDocument extends Document, CityProps { }
+const CityModel = model<CityDocument>('_citys', CitySchema)
 
-export { ICity, CitySchema }
+export default CityModel
+export { CityDocument, CitySchema }

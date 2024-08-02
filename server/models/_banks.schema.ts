@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IBank extends Document {
+interface BankProps {
   value: string
   updatedAt: Date
 }
 
-const BankSchema = new Schema<IBank>(
+const BankSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const BankSchema = new Schema<IBank>(
   },
 )
 
-export const BankModel = defineMongooseModel<IBank>({
-  name: '_banks',
-  schema: BankSchema,
-})
+interface BankDocument extends Document, BankProps { }
+const BankModel = model<BankDocument>('_banks', BankSchema)
 
-export { IBank, BankSchema }
+export default BankModel
+export { BankDocument, BankSchema }

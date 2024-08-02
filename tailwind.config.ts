@@ -12,9 +12,14 @@ export default <Partial<Config>>{
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
     './node_modules/flowbite/**/*.{js,ts}',
+    './app.vue',
+    './error.vue',
   ],
   theme: {
     extend: {},
   },
-  plugins: [tailwindForm, flowbitePlugin],
+  plugins: [
+    tailwindForm,
+    flowbitePlugin,
+  ],
 }

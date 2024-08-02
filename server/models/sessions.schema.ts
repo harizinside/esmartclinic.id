@@ -1,9 +1,8 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { UserModel } from './users.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import UserModel from './users.schema'
 
-interface ISession extends Document {
+interface SessionProps extends Document {
   userId: string
   ip: string
   agent: string
@@ -11,7 +10,7 @@ interface ISession extends Document {
   activity: Date
 }
 
-const SessionSchema = new Schema<ISession>(
+const SessionSchema = new Schema(
   {
     userId: { type: String, ref: UserModel },
     ip: { type: String },
@@ -25,9 +24,8 @@ const SessionSchema = new Schema<ISession>(
   },
 )
 
-export const sessionModel = defineMongooseModel<ISession>({
-  name: 'sessions',
-  schema: SessionSchema,
-})
+interface SessionDocument extends Document, SessionProps { }
+const SessionModel = model<SessionDocument>('sessions', SessionSchema)
 
-export { ISession, SessionSchema }
+export default SessionModel
+export { SessionDocument, SessionSchema }

@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface ITitle extends Document {
+interface TitleProps {
   value: string
   updatedAt: Date
 }
 
-const TitleSchema = new Schema<ITitle>(
+const TitleSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const TitleSchema = new Schema<ITitle>(
   },
 )
 
-export const TitleModel = defineMongooseModel<ITitle>({
-  name: '_titles',
-  schema: TitleSchema,
-})
+interface TitleDocument extends Document, TitleProps { }
+const TitleModel = model<TitleDocument>('_titles', TitleSchema)
 
-export { ITitle, TitleSchema }
+export default TitleModel
+export { TitleDocument, TitleSchema }

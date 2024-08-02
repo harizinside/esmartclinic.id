@@ -1,17 +1,16 @@
 import type { Document, Types } from 'mongoose'
-import { Schema } from 'mongoose'
-import { TitleModel } from './_titles.schema'
-import { VillageModel } from './_villages.schema'
-import { ReligionModel } from './_religions.schema'
-import { MaritalModel } from './_maritals.schema'
-import { WorkerModel } from './_workers.schema'
-import { BranchModel } from './branchs.schema'
-import { EducationModel } from './_educations.schema'
-import { EthnicModel } from './_ethnics.schema'
-import { InsuranceModel } from './insurances.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import TitleModel from './_titles.schema'
+import VillageModel from './_villages.schema'
+import ReligionModel from './_religions.schema'
+import MaritalModel from './_maritals.schema'
+import WorkerModel from './_workers.schema'
+import BranchModel from './branchs.schema'
+import EducationModel from './_educations.schema'
+import EthnicModel from './_ethnics.schema'
+import InsuranceModel from './insurances.schema'
 
-interface IUsers extends Document {
+interface UsersProps {
   medicalRecord: string | null
   registerRecord: string
   titleId: Types.ObjectId
@@ -67,7 +66,7 @@ interface IUsers extends Document {
   deletedReason: string | null
 }
 
-const UserSchema = new Schema<IUsers>(
+const UserSchema = new Schema(
   {
     medicalRecord: { type: String },
     registerRecord: { type: String, required: true },
@@ -129,9 +128,8 @@ const UserSchema = new Schema<IUsers>(
   },
 )
 
-export const UserModel = defineMongooseModel<IUsers>({
-  name: 'users',
-  schema: UserSchema,
-})
+interface UserDocument extends Document, UsersProps { }
+const UserModel = model<UserDocument>('users', UserSchema)
 
-export { IUsers, UserSchema }
+export default UserModel
+export { UserDocument, UserSchema }

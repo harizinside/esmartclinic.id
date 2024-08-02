@@ -1,9 +1,8 @@
 import type { Document, Types } from 'mongoose'
-import { Schema } from 'mongoose'
-import { SubdistrictModel } from './_subdistricts.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import SubdistrictModel from './_subdistricts.schema'
 
-interface IVillage extends Document {
+interface VillageProps {
   subdistrictId: Types.ObjectId
   code: string
   name: string
@@ -11,7 +10,7 @@ interface IVillage extends Document {
   updatedAt: Date
 }
 
-const VillageSchema = new Schema<IVillage>(
+const VillageSchema = new Schema(
   {
     subdistrictId: { type: 'ObjectId', ref: SubdistrictModel, required: true },
     code: { type: String, required: true },
@@ -25,9 +24,8 @@ const VillageSchema = new Schema<IVillage>(
   },
 )
 
-export const VillageModel = defineMongooseModel<IVillage>({
-  name: '_villages',
-  schema: VillageSchema,
-})
+interface VillageDocument extends Document, VillageProps { }
+const VillageModel = model<VillageDocument>('_villages', VillageSchema)
 
-export { IVillage, VillageSchema }
+export default VillageModel
+export { VillageDocument, VillageSchema }

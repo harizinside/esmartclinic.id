@@ -1,10 +1,9 @@
 import type { Document, Types } from 'mongoose'
-import { Schema } from 'mongoose'
-import { ComanyModel } from './companys.schema'
-import { VillageModel } from './_villages.schema'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
+import ComanyModel from './companys.schema'
+import VillageModel from './_villages.schema'
 
-interface IBranch extends Document {
+interface BranchProps {
   path: string | null// Logo
   companyId: Types.ObjectId
   name: string
@@ -32,7 +31,7 @@ interface IBranch extends Document {
   updatedAt: Date
 }
 
-const BranchSchema = new Schema<IBranch>(
+const BranchSchema = new Schema(
   {
     path: { type: String },
     companyId: { type: 'ObjectId', ref: ComanyModel, required: true },
@@ -66,9 +65,8 @@ const BranchSchema = new Schema<IBranch>(
   },
 )
 
-export const BranchModel = defineMongooseModel<IBranch>({
-  name: 'branchs',
-  schema: BranchSchema,
-})
+interface BranchDocument extends Document, BranchProps { }
+const BranchModel = model<BranchDocument>('branchs', BranchSchema)
 
-export { IBranch, BranchSchema }
+export default BranchModel
+export { BranchDocument, BranchSchema }

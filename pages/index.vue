@@ -35,12 +35,12 @@
             </nav>
           </div>
         </div>
-        <HIDialog
+        <Dialog
           class="lg:hidden"
           :open="mobileMenuOpen"
           @close="mobileMenuOpen = false">
           <div class="fixed inset-0 z-50" />
-          <HIDialogPanel class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <DialogPanel class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
               <a
                 href="#"
@@ -77,8 +77,8 @@
                 </div>
               </div>
             </div>
-          </HIDialogPanel>
-        </HIDialog>
+          </DialogPanel>
+        </Dialog>
       </header>
 
       <div class="relative">
@@ -238,14 +238,14 @@
             Frequently asked questions
           </h2>
           <dl class="mt-10 space-y-6 divide-y divide-gray-900/10">
-            <HIDisclosure
+            <Disclosure
               v-for="faq in faqs"
               :key="faq.question"
               v-slot="{ open }"
               as="div"
               class="pt-6">
               <dt>
-                <HIDisclosureButton class="flex w-full items-start justify-between text-left text-gray-900">
+                <DisclosureButton class="flex w-full items-start justify-between text-left text-gray-900">
                   <span class="text-base font-semibold leading-7">{{ faq.question }}</span>
                   <span class="ml-6 flex h-7 items-center">
                     <PlusSmallIcon
@@ -257,16 +257,16 @@
                       class="h-6 w-6"
                       aria-hidden="true" />
                   </span>
-                </HIDisclosureButton>
+                </DisclosureButton>
               </dt>
-              <HIDisclosurePanel
+              <DisclosurePanel
                 as="dd"
                 class="mt-2 pr-12">
                 <p class="text-base leading-7 text-gray-600">
                   {{ faq.answer }}
                 </p>
-              </HIDisclosurePanel>
-            </HIDisclosure>
+              </DisclosurePanel>
+            </Disclosure>
           </dl>
         </div>
       </div>
@@ -406,6 +406,13 @@
 
 <script lang="ts" setup>
 import { ref, defineComponent, h } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon, MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline'
 import { CheckIcon } from '@heroicons/vue/20/solid'
 

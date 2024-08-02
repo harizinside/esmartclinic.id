@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { Types } from 'mongoose'
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { UserModel } from '@/server/models/users.schema'
-import { PrevilageModel } from '~/server/models/privilages.schema'
+import UserModel from '@/server/models/users.schema'
+import PrevilageModel from '~/server/models/privilages.schema'
 
 export default defineEventHandler(async (event) => {
   const userSchema = z.object({

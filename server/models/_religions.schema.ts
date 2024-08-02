@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IReligion extends Document {
+interface ReligionProps {
   value: string
   updatedAt: Date
 }
 
-const ReligionSchema = new Schema<IReligion>(
+const ReligionSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const ReligionSchema = new Schema<IReligion>(
   },
 )
 
-export const ReligionModel = defineMongooseModel<IReligion>({
-  name: '_religions',
-  schema: ReligionSchema,
-})
+interface ReligionDocument extends Document, ReligionProps { }
+const ReligionModel = model<ReligionDocument>('_religions', ReligionSchema)
 
-export { IReligion, ReligionSchema }
+export default ReligionModel
+export { ReligionDocument, ReligionSchema }

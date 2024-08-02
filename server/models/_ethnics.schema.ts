@@ -1,13 +1,12 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IEthnic extends Document {
+interface EthnicProps {
   value: string
   updatedAt: Date
 }
 
-const EthnicSchema = new Schema<IEthnic>(
+const EthnicSchema = new Schema(
   {
     value: { type: String, required: true },
     updatedAt: { type: Date },
@@ -18,9 +17,8 @@ const EthnicSchema = new Schema<IEthnic>(
   },
 )
 
-export const EthnicModel = defineMongooseModel<IEthnic>({
-  name: '_ethnics',
-  schema: EthnicSchema,
-})
+interface EthnicDocument extends Document, EthnicProps { }
+const EthnicModel = model<EthnicDocument>('_ethnics', EthnicSchema)
 
-export { IEthnic, EthnicSchema }
+export default EthnicModel
+export { EthnicDocument, EthnicSchema }

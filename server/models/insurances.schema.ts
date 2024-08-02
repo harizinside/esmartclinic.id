@@ -1,15 +1,14 @@
 import type { Document } from 'mongoose'
-import { Schema } from 'mongoose'
-import { defineMongooseModel } from '#nuxt/mongoose'
+import { Schema, model } from 'mongoose'
 
-interface IInsurance extends Document {
+interface InsuranceProps {
   name: string
   path: string
   type: 'INSURANCE' | 'COMPANY'
   updatedAt: Date
 }
 
-const InsuranceSchema = new Schema<IInsurance>(
+const InsuranceSchema = new Schema(
   {
     name: { type: String, required: true },
     path: { type: String },
@@ -22,9 +21,8 @@ const InsuranceSchema = new Schema<IInsurance>(
   },
 )
 
-export const InsuranceModel = defineMongooseModel<IInsurance>({
-  name: 'insurances',
-  schema: InsuranceSchema,
-})
+interface InsuranceDocument extends Document, InsuranceProps { }
+const InsuranceModel = model<InsuranceDocument>('insurances', InsuranceSchema)
 
-export { IInsurance, InsuranceSchema }
+export default InsuranceModel
+export { InsuranceDocument, InsuranceSchema }
