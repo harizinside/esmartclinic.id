@@ -41,7 +41,9 @@ export default defineEventHandler(async (event) => {
     await UserModel.updateOne({ _id: user._id }, { rememberToken: token })
   }
 
-  return { status: true, token: token, user: user }
+  const menu = await getMenusByUserId(user._id as string)
+
+  return { status: true, token: token, user: user, menu: menu }
 })
 
 const getMenusByUserId = async (userId: string) => {

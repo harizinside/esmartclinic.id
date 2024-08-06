@@ -2,7 +2,7 @@ import type { Document } from 'mongoose'
 import { Schema, model } from 'mongoose'
 import UserModel from './users.schema'
 
-interface SessionProps extends Document {
+interface SessionProps {
   userId: string
   ip: string
   agent: string

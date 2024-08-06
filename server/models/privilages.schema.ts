@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose'
 import MenuModel from './menus.schema'
 import UserModel from './users.schema'
 
-interface PrevilageProps extends Document {
+interface PrevilageProps {
   name: string
   category: 'dashboard' | 'users'
   menu: {

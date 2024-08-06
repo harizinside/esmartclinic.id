@@ -1,7 +1,7 @@
 import type { Document } from 'mongoose'
 import { Schema, model } from 'mongoose'
 
-interface MenuProps extends Document {
+interface MenuProps {
   name: string
   icon: string
   status: boolean

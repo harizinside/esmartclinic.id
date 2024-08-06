@@ -23,7 +23,6 @@ export default defineNuxtConfig({
   ],
   csurf: {
     methodsToProtect: [
-      'GET',
       'PUT',
       'PATCH',
       'POST',
