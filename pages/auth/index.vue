@@ -158,6 +158,7 @@ import { reactive } from 'vue'
 const { $csrfFetch } = useNuxtApp()
 const router = useRouter()
 const auth = useAuthStore()
+const menu = useMenuStore()
 
 useHead({
   title: 'Authorization | e-Smart Clinic',
@@ -216,7 +217,9 @@ const handleSubmit = async () => {
   })
 
   if (data.status) {
-    await auth.useSignIn(data.user, data.token)
+    auth.useSignIn(data.user, data.token)
+    menu.setMenu(data.menu)
+
     router.push({ path: '/admin' })
   }
 }

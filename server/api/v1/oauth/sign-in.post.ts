@@ -3,7 +3,6 @@ import { Types } from 'mongoose'
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import UserModel from '@/server/models/users.schema'
-import PrevilageModel from '~/server/models/privilages.schema'
 
 export default defineEventHandler(async (event) => {
   const userSchema = z.object({
@@ -48,98 +47,152 @@ export default defineEventHandler(async (event) => {
 
 const getMenusByUserId = async (userId: string) => {
   try {
-    const result = await PrevilageModel.aggregate([
-      { $match: { 'users.userId': new Types.ObjectId(userId) } },
-      { $unwind: '$menu' },
+    const result = await UserModel.aggregate([
       {
-        $lookup: {
-          from: 'menus',
-          localField: 'menu.menuId',
-          foreignField: '_id',
-          as: 'menuDetails',
-        },
-      },
-      { $unwind: '$menuDetails' },
-      {
-        $unwind: {
-          path: '$menuDetails.children',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $lookup: {
-          from: 'menus',
-          localField: 'menuDetails.children._id',
-          foreignField: '_id',
-          as: 'childMenuDetails',
-        },
-      },
-      {
-        $unwind: {
-          path: '$childMenuDetails',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          menuId: '$menu.menuId',
-          name: '$menuDetails.name',
-          icon: '$menuDetails.icon',
-          status: '$menuDetails.status',
-          order: '$menuDetails.order',
-          updatedAt: '$menuDetails.updatedAt',
-          permissions: {
-            create: '$menu.create',
-            read: '$menu.read',
-            update: '$menu.update',
-            delete: '$menu.delete',
-            import: '$menu.import',
-            export: '$menu.export',
-          },
-          children: {
-            $cond: {
-              if: { $gt: [{ $size: '$menu.children' }, 0] },
-              then: {
-                $map: {
-                  input: '$menu.children',
-                  as: 'child',
-                  in: {
-                    name: '$childMenuDetails.name',
-                    icon: '$childMenuDetails.icon',
-                    status: '$childMenuDetails.status',
-                    order: '$childMenuDetails.order',
-                    createdAt: '$childMenuDetails.createdAt',
-                    updatedAt: '$childMenuDetails.updatedAt',
-                    permissions: {
-                      create: '$$child.create',
-                      read: '$$child.read',
-                      update: '$$child.update',
-                      delete: '$$child.delete',
-                      import: '$$child.import',
-                      export: '$$child.export',
-                    },
-                  },
-                },
-              },
-              else: [],
-            },
-          },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          menus: { $push: '$$ROOT' },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          menus: 1,
-        },
-      },
-    ])
+        '$match': {
+          '_id': new Types.ObjectId(userId)
+        }
+      }, {
+        '$lookup': {
+          'from': 'previlages', 
+          'localField': '_id', 
+          'foreignField': 'users.userId', 
+          'as': 'privileges'
+        }
+      }, {
+        '$unwind': '$privileges'
+      }, {
+        '$lookup': {
+          'from': 'menus', 
+          'localField': 'privileges.menu.menuId', 
+          'foreignField': '_id', 
+          'as': 'menus'
+        }
+      }, {
+        '$unwind': '$menus'
+      }, {
+        '$project': {
+          '_id': 0, 
+          'name': '$menus.name', 
+          'icon': '$menus.icon', 
+          'status': '$menus.status', 
+          'order': '$menus.order', 
+          'children': {
+            '$map': {
+              'input': '$menus.children', 
+              'as': 'child', 
+              'in': {
+                'name': '$$child.name', 
+                'icon': '$$child.icon', 
+                'status': '$$child.status', 
+                'order': '$$child.order', 
+                'createdAt': '$$child.createdAt', 
+                'updatedAt': '$$child.updatedAt', 
+                'privileges': {
+                  '$filter': {
+                    'input': '$privileges.menu', 
+                    'as': 'priv', 
+                    'cond': {
+                      '$eq': [
+                        '$$priv.menuId', '$$child._id'
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          'updatedAt': '$menus.updatedAt', 
+          'privileges': {
+            '$filter': {
+              'input': '$privileges.menu', 
+              'as': 'priv', 
+              'cond': {
+                '$eq': [
+                  '$$priv.menuId', '$menus._id'
+                ]
+              }
+            }
+          }
+        }
+      }, {
+        '$match': {
+          'privileges.read': true
+        }
+      }, {
+        '$unwind': {
+          'path': '$privileges', 
+          'preserveNullAndEmptyArrays': true
+        }
+      }, {
+        '$project': {
+          'name': 1, 
+          'icon': 1, 
+          'status': 1, 
+          'order': 1, 
+          'children': {
+            '$filter': {
+              'input': '$children', 
+              'as': 'child', 
+              'cond': {
+                '$anyElementTrue': [
+                  '$$child.privileges.read'
+                ]
+              }
+            }
+          }, 
+          'updatedAt': 1, 
+          'privileges': 1
+        }
+      }, {
+        '$project': {
+          'name': '$name', 
+          'icon': '$icon', 
+          'status': '$status', 
+          'order': '$order', 
+          'privilage': {
+            'create': '$privileges.create', 
+            'read': '$privileges.read', 
+            'update': '$privileges.update', 
+            'delete': '$privileges.delete', 
+            'import': '$privileges.import', 
+            'export': '$privileges.export'
+          }, 
+          'children': {
+            '$map': {
+              'input': '$children', 
+              'as': 'ano', 
+              'in': {
+                'name': '$$ano.name', 
+                'icon': '$$ano.icon', 
+                'status': '$$ano.status', 
+                'order': '$$ano.order', 
+                'privilage': {
+                  '$first': {
+                    '$map': {
+                      'input': '$$ano.privileges', 
+                      'as': 'xpriv', 
+                      'in': {
+                        'create': '$$xpriv.create', 
+                        'read': '$$xpriv.read', 
+                        'update': '$$xpriv.update', 
+                        'delete': '$$xpriv.delete', 
+                        'import': '$$xpriv.import', 
+                        'export': '$$xpriv.export'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, {
+        '$sort': {
+          'order': 1
+        }
+      }
+    ]);
 
     return result
   }
