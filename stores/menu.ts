@@ -22,7 +22,7 @@ interface IPrivilages {
   export: boolean
 }
 
-export const useMenuStore = defineStore('__auth', () => {
+export const useMenuStore = defineStore('__menu', () => {
   const menuState = ref<IMenu[]>([
     {
       name: '',
