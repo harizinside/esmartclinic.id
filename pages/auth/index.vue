@@ -72,7 +72,9 @@
               <button
                 type="submit"
                 class="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
-                <v-icons v-if="loading" :name="'spinner-circle'" /> 
+                <v-icons
+                  v-if="loading"
+                  :name="'spinner-circle'" />
                 <span v-else>Masuk</span>
               </button>
             </div>
@@ -159,7 +161,6 @@ import { reactive, ref } from 'vue'
 const { $csrfFetch } = useNuxtApp()
 
 const loading = ref<boolean>(false)
-const router = useRouter()
 const auth = useAuthStore()
 const menu = useMenuStore()
 
@@ -226,13 +227,14 @@ const handleSubmit = async () => {
       auth.useSignIn(data.user, data.token)
       menu.setMenu(data.menu)
 
-      router.push({ path: '/admin' })
+      await navigateTo({ path: '/admin' })
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
     throw error
-
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 }

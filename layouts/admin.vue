@@ -71,7 +71,7 @@
                           <NuxtLink
                             v-if="!item.children?.length"
                             :to="item.href"
-                            :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                            :class="[$route.path === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
                             <v-icons
                               :name="item.icon"
                               class="h-6 w-6 shrink-0"
@@ -84,7 +84,7 @@
                             as="div">
                             <DisclosureButton
                               as="button"
-                              :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 ']">
+                              :class="[$route.path === item.href || $route.path.startsWith(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 ']">
                               <v-icons
                                 :name="item.icon"
                                 class="h-6 w-6 shrink-0 text-gray-400"
@@ -103,7 +103,7 @@
                                 <NuxtLink
                                   as="a"
                                   :to="subItem.href"
-                                  :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
+                                  :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
                                   <ChevronRightIcon
                                     class="h-4 w-4 shrink-0 pt-1"
                                     aria-hidden="true" />
@@ -168,7 +168,7 @@
                     <NuxtLink
                       v-if="!item.children?.length"
                       :to="item.href"
-                      :class="[route.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                      :class="[$route.path === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
                       <v-icons
                         :name="item.icon"
                         class="h-6 w-6 shrink-0"
@@ -180,7 +180,7 @@
                       v-slot="{ open }"
                       as="div">
                       <DisclosureButton
-                        :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6']">
+                        :class="[$route.path === item.href || $route.path.startsWith(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6']">
                         <v-icons
                           :name="item.icon"
                           class="h-6 w-6 shrink-0 text-gray-400"
@@ -198,7 +198,7 @@
                           :key="subItem.name">
                           <NuxtLink
                             :to="subItem.href"
-                            :class="[route.fullPath === subItem.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
+                            :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
                             <ChevronRightIcon
                               class="h-5 w-5 shrink-0 pt-1"
                               aria-hidden="true" />
@@ -377,8 +377,6 @@ const menuState = useMenuStore()
 
 const auth = useGetUser()
 const navigation = useGetUserMenu()
-const router = useRouter()
-const route = useRoute()
 
 const navs = [{ name: 'Dashboard', link: '/', active: false }]
 
@@ -428,7 +426,7 @@ useServerSeoMeta({
 const signOut = async () => {
   await authState.useSignOut()
   await menuState.unsetMenu()
-  router.push({ path: '/auth' })
+  await navigateTo({ path: '/auth' })
 }
 
 onMounted(async () => {
