@@ -168,7 +168,7 @@
                     <NuxtLink
                       v-if="!item.children?.length"
                       :to="item.href"
-                      :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                      :class="[route.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
                       <v-icons
                         :name="item.icon"
                         class="h-6 w-6 shrink-0"
@@ -198,7 +198,7 @@
                           :key="subItem.name">
                           <NuxtLink
                             :to="subItem.href"
-                            :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
+                            :class="[route.fullPath === subItem.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
                             <ChevronRightIcon
                               class="h-5 w-5 shrink-0 pt-1"
                               aria-hidden="true" />
@@ -378,6 +378,7 @@ const menuState = useMenuStore()
 const auth = useGetUser()
 const navigation = useGetUserMenu()
 const router = useRouter()
+const route = useRoute()
 
 const navs = [{ name: 'Dashboard', link: '/', active: false }]
 

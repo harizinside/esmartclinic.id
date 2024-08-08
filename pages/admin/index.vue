@@ -8,6 +8,7 @@
 definePageMeta({
   layout: 'admin',
 })
+
 useHead({
   title: 'Dashboard | e-Smart Clinic',
 })
