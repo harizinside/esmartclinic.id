@@ -42,7 +42,8 @@
                     class="-m-2.5 p-2.5"
                     @click="sidebarOpen = false">
                     <span class="sr-only">Close sidebar</span>
-                    <XMarkIcon
+                    <v-icons
+                      :name="'x-mark'"
                       class="h-6 w-6 text-white"
                       aria-hidden="true" />
                   </button>
@@ -68,23 +69,24 @@
                           v-for="item in navigation"
                           :key="item.name">
                           <NuxtLink
-                            v-if="!item.children"
+                            v-if="!item.children?.length"
                             :to="item.href"
-                            :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
-                            <component
-                              :is="item.icon"
-                              class="h-6 w-6 shrink-0 "
+                            :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                            <v-icons
+                              :name="item.icon"
+                              class="h-6 w-6 shrink-0"
                               aria-hidden="true" />
-                            {{ item.name }}asas
+                            {{ item.name }}
                           </NuxtLink>
                           <Disclosure
                             v-else
                             v-slot="{ open }"
                             as="div">
                             <DisclosureButton
-                              :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 ']">
-                              <component
-                                :is="item.icon"
+                              as="button"
+                              :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 ']">
+                              <v-icons
+                                :name="item.icon"
                                 class="h-6 w-6 shrink-0 text-gray-400"
                                 aria-hidden="true" />
                               {{ item.name }}
@@ -101,7 +103,7 @@
                                 <NuxtLink
                                   as="a"
                                   :to="subItem.href"
-                                  :class="[subItem.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
+                                  :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
                                   <ChevronRightIcon
                                     class="h-4 w-4 shrink-0 pt-1"
                                     aria-hidden="true" />
@@ -118,7 +120,8 @@
                       <NuxtLink
                         to="/admin/settings"
                         class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
-                        <Cog6ToothIcon
+                        <v-icons
+                          :name="'cog-6-tooth'"
                           class="h-6 w-6 shrink-0"
                           aria-hidden="true" />
                         Pengaturan
@@ -152,7 +155,7 @@
                 role="list"
                 class="-mx-2 space-y-1">
                 <div v-if="loading">
-                   <li 
+                  <li
                     v-for="index in 16"
                     :key="index">
                     <v-shimmer-text />
@@ -163,12 +166,12 @@
                     v-for="item in navigation"
                     :key="item.name">
                     <NuxtLink
-                      v-if="!item.children"
+                      v-if="!item.children?.length"
                       :to="item.href"
-                      :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
-                      <component
-                        :is="item.icon"
-                        class="h-6 w-6 shrink-0 "
+                      :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                      <v-icons
+                        :name="item.icon"
+                        class="h-6 w-6 shrink-0"
                         aria-hidden="true" />
                       {{ item.name }}
                     </NuxtLink>
@@ -177,9 +180,9 @@
                       v-slot="{ open }"
                       as="div">
                       <DisclosureButton
-                        :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6 ']">
-                        <component
-                          :is="item.icon"
+                        :class="[router.hasRoute(item.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-semibold leading-6']">
+                        <v-icons
+                          :name="item.icon"
                           class="h-6 w-6 shrink-0 text-gray-400"
                           aria-hidden="true" />
                         {{ item.name }}
@@ -194,9 +197,8 @@
                           v-for="subItem in item.children"
                           :key="subItem.name">
                           <NuxtLink
-                            as="a"
                             :to="subItem.href"
-                            :class="[subItem.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
+                            :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
                             <ChevronRightIcon
                               class="h-5 w-5 shrink-0 pt-1"
                               aria-hidden="true" />
@@ -209,12 +211,13 @@
                 </div>
               </ul>
             </li>
-            
+
             <li class="mt-auto">
               <NuxtLink
                 to="/admin/settings"
                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
-                <Cog6ToothIcon
+                <v-icons
+                  :name="'cog-6-tooth'"
                   class="h-6 w-6 shrink-0"
                   aria-hidden="true" />
                 Pengaturan
@@ -233,7 +236,8 @@
           class="-m-2.5 p-2.5 text-gray-700 lg:hidden"
           @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
-          <Bars3Icon
+          <v-icons
+            :name="'bars-3'"
             class="h-6 w-6"
             aria-hidden="true" />
         </button>
@@ -266,7 +270,8 @@
               type="button"
               class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
               <span class="sr-only">View notifications</span>
-              <BellIcon
+              <v-icons
+                :name="'bell'"
                 class="h-6 w-6"
                 aria-hidden="true" />
             </button>
@@ -282,14 +287,18 @@
               class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5">
                 <span class="sr-only">Open user Menu</span>
-                  <v-shimmer-image-profile v-if="loading" />
-                  <img
+                <v-shimmer-image-profile v-if="loading" />
+                <img
                   v-else
                   class="h-8 w-8 rounded-full bg-gray-50 "
                   :src="auth.user!.path!"
                   alt="">
-                <v-shimmer-text v-if="loading" class="ml-4 w-40"/>
-                <span v-else class="hidden lg:flex lg:items-center">
+                <v-shimmer-text
+                  v-if="loading"
+                  class="ml-4 w-40" />
+                <span
+                  v-else
+                  class="hidden lg:flex lg:items-center">
                   <span
                     class="ml-4 text-sm font-semibold leading-6 text-gray-600"
                     aria-hidden="true">
@@ -357,12 +366,6 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import {
-  Bars3Icon,
-  BellIcon,
-  Cog6ToothIcon,
-  XMarkIcon
-} from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import { useGetUser } from '~/composables/get-user'
 import { useGetUserMenu } from '~/composables/get-user-menu'
@@ -421,17 +424,15 @@ useServerSeoMeta({
   robots: 'noindex, nofollow',
 })
 
-const signOut= async () => {
- await  authState.useSignOut()
- await  menuState.unsetMenu()
- router.push({ path: '/auth' })
+const signOut = async () => {
+  await authState.useSignOut()
+  await menuState.unsetMenu()
+  router.push({ path: '/auth' })
 }
 
 onMounted(async () => {
   loading.value = false
-  console.log(router.currentRoute.value.fullPath)
 })
-
 </script>
 
 <style></style>

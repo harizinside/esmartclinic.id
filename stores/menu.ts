@@ -7,10 +7,10 @@ interface ILabel {
   icon: string
   status: boolean
   order: number
-  privilage: IPrivilages,
+  privilage: IPrivilages
 }
 
-interface IMenu extends ILabel{
+interface IMenu extends ILabel {
   children?: ILabel[]
 }
 
@@ -39,8 +39,8 @@ export const useMenuStore = defineStore('__menu', () => {
         import: false,
         export: false,
       },
-      children: []
-    }
+      children: [],
+    },
   ])
 
   const setMenu = (args: IMenu[]) => {
@@ -62,8 +62,8 @@ export const useMenuStore = defineStore('__menu', () => {
         import: false,
         export: false,
       },
-      children: []
-    }]  
+      children: [],
+    }]
   }
 
   return { menuState, setMenu, unsetMenu }

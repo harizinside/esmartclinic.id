@@ -42,10 +42,9 @@ import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps<{
   navs: {
-    name: string;
-    link: string;
-    active: boolean;
+    name: string
+    link: string
+    active: boolean
   }[]
-}>();
-
+}>()
 </script>

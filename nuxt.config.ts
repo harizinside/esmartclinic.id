@@ -15,7 +15,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxtjs/i18n',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt',
@@ -25,12 +24,17 @@ export default defineNuxtConfig({
     methodsToProtect: [
       'PUT',
       'PATCH',
-      'POST',
+      // 'POST',
       'DELETE',
     ],
     headerName: 'csrf-token',
   },
   css: ['~/assets/css/main.css'],
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

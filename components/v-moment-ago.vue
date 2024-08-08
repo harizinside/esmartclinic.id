@@ -6,16 +6,20 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { DateTime } from 'luxon'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
-const relativeDate = ref()
+// Extend dayjs with the relativeTime plugin
+dayjs.extend(relativeTime)
+
+const relativeDate = ref<string>()
 const props = defineProps<{
   datetime: string
 }>()
 
 onMounted(() => {
-  const parsedDate = DateTime.fromISO(props.datetime).setLocale('id')
-  relativeDate.value = parsedDate.toRelative()
+  const parsedDate = dayjs(props.datetime)
+  relativeDate.value = parsedDate.fromNow() // Get relative time from now
 })
 </script>
 
