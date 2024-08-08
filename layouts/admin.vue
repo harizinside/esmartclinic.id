@@ -70,12 +70,12 @@
                           <NuxtLink
                             v-if="!item.children"
                             :to="item.href"
-                            :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
+                            :class="[router.currentRoute.value.fullPath === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6']">
                             <component
                               :is="item.icon"
                               class="h-6 w-6 shrink-0 "
                               aria-hidden="true" />
-                            {{ item.name }}
+                            {{ item.name }}asas
                           </NuxtLink>
                           <Disclosure
                             v-else
@@ -286,14 +286,14 @@
                   <img
                   v-else
                   class="h-8 w-8 rounded-full bg-gray-50 "
-                  :src="auth.user.path"
+                  :src="auth.user!.path!"
                   alt="">
                 <v-shimmer-text v-if="loading" class="ml-4 w-40"/>
                 <span v-else class="hidden lg:flex lg:items-center">
                   <span
                     class="ml-4 text-sm font-semibold leading-6 text-gray-600"
                     aria-hidden="true">
-                    {{ auth.user.name }}
+                    {{ auth.user!.name! }}
                   </span>
                   <ChevronDownIcon
                     class="ml-2 h-5 w-5 text-gray-400"
@@ -318,8 +318,8 @@
                   </MenuItem>
                   <MenuItem>
                     <NuxtLink
-                      to="#"
-                      class="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-slate-100">
+                      class="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-slate-100"
+                      @click="signOut">
                       Sign out
                     </NuxtLink>
                   </MenuItem>
@@ -364,13 +364,19 @@ import {
   XMarkIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
-
-const menuStore = useMenuStore()
-const userStore = useAuthStore();
+import { useGetUser } from '~/composables/get-user'
+import { useGetUserMenu } from '~/composables/get-user-menu'
 
 const loading = ref<boolean>(true)
-const auth = ref()
-const navigation = ref()
+const sidebarOpen = ref<boolean>(false)
+const authState = useAuthStore()
+const menuState = useMenuStore()
+
+const auth = useGetUser()
+const navigation = useGetUserMenu()
+const router = useRouter()
+
+const navs = [{ name: 'Dashboard', link: '/', active: false }]
 
 useHead({
   link: [
@@ -415,15 +421,15 @@ useServerSeoMeta({
   robots: 'noindex, nofollow',
 })
 
-const sidebarOpen = ref(false)
-const navs = ref([
-  { name: 'Dashboard', link: '#', active: false },
-])
+const signOut= async () => {
+ await  authState.useSignOut()
+ await  menuState.unsetMenu()
+ router.push({ path: '/auth' })
+}
 
 onMounted(async () => {
   loading.value = false
-  navigation.value = menuStore.menuState
-  auth.value = userStore.authState
+  console.log(router.currentRoute.value.fullPath)
 })
 
 </script>

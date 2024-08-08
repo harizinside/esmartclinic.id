@@ -72,7 +72,8 @@
               <button
                 type="submit"
                 class="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
-                <!-- <self-icons :name="'loading'" />  --> Masuk
+                <v-icons v-if="loading" :name="'spinner-circle'" /> 
+                <span v-else>Masuk</span>
               </button>
             </div>
           </form>
@@ -153,9 +154,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 const { $csrfFetch } = useNuxtApp()
+
+const loading = ref<boolean>(false)
 const router = useRouter()
 const auth = useAuthStore()
 const menu = useMenuStore()
@@ -211,16 +214,26 @@ const form = reactive({
 })
 
 const handleSubmit = async () => {
-  const data = await $csrfFetch('/api/v1/oauth/sign-in', {
-    method: 'POST',
-    body: form,
-  })
+  loading.value = true
 
-  if (data.status) {
-    auth.useSignIn(data.user, data.token)
-    menu.setMenu(data.menu)
+  try {
+    const data = await $csrfFetch('/api/v1/oauth/sign-in', {
+      method: 'POST',
+      body: form,
+    })
 
-    router.push({ path: '/admin' })
+    if (data.status) {
+      auth.useSignIn(data.user, data.token)
+      menu.setMenu(data.menu)
+
+      router.push({ path: '/admin' })
+    }
+  } catch (error) {
+    console.error(error)
+    throw error
+
+  } finally {
+    loading.value = false
   }
 }
 </script>

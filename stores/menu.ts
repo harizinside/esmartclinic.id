@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 interface ILabel {
   name: string
+  href: string
   icon: string
   status: boolean
   order: number
@@ -10,7 +11,7 @@ interface ILabel {
 }
 
 interface IMenu extends ILabel{
-  children?: ILabel
+  children?: ILabel[]
 }
 
 interface IPrivilages {
@@ -26,6 +27,7 @@ export const useMenuStore = defineStore('__menu', () => {
   const menuState = ref<IMenu[]>([
     {
       name: '',
+      href: '',
       icon: '',
       status: false,
       order: 0,
@@ -37,20 +39,7 @@ export const useMenuStore = defineStore('__menu', () => {
         import: false,
         export: false,
       },
-      children: {
-        name: '',
-        icon: '',
-        status: false,
-        order: 0,
-        privilage: {
-          create: false,
-          read: false,
-          update: false,
-          delete: false,
-          import: false,
-          export: false,
-        }
-      }
+      children: []
     }
   ])
 
@@ -58,7 +47,26 @@ export const useMenuStore = defineStore('__menu', () => {
     menuState.value = args
   }
 
-  return { menuState, setMenu}
+  const unsetMenu = () => {
+    menuState.value = [{
+      name: '',
+      href: '',
+      icon: '',
+      status: false,
+      order: 0,
+      privilage: {
+        create: false,
+        read: false,
+        update: false,
+        delete: false,
+        import: false,
+        export: false,
+      },
+      children: []
+    }]  
+  }
+
+  return { menuState, setMenu, unsetMenu }
 },
 {
   persist: {
