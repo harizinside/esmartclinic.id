@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="flex"
+      class="flex p-1"
       aria-label="Breadcrumb">
       <ol
         role="list"

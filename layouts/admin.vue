@@ -94,23 +94,31 @@
                                 aria-hidden="true"
                                 :class="[open ? 'rotate-90 text-gray-500' : 'text-gray-400', 'ml-auto h-5 w-5 shrink-0']" />
                             </DisclosureButton>
-                            <DisclosurePanel
-                              as="ul"
-                              class="mt-1 px-2">
-                              <li
-                                v-for="subItem in item.children"
-                                :key="subItem.name">
-                                <NuxtLink
-                                  as="a"
-                                  :to="subItem.href"
-                                  :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
-                                  <ChevronRightIcon
-                                    class="h-4 w-4 shrink-0 pt-1"
-                                    aria-hidden="true" />
-                                  {{ subItem.name }}
-                                </NuxtLink>
-                              </li>
-                            </DisclosurePanel>
+                            <transition
+                              enter-active-class="transition duration-300 ease-out"
+                              enter-from-class="transform translate-x-[-100%] opacity-0"
+                              enter-to-class="transform translate-x-0 opacity-100"
+                              leave-active-class="transition duration-200 ease-in"
+                              leave-from-class="transform translate-x-0 opacity-100"
+                              leave-to-class="transform translate-x-[-100%] opacity-0">
+                              <DisclosurePanel
+                                as="ul"
+                                class="mt-1 px-2">
+                                <li
+                                  v-for="subItem in item.children"
+                                  :key="subItem.name">
+                                  <NuxtLink
+                                    as="a"
+                                    :to="subItem.href"
+                                    :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 ']">
+                                    <ChevronRightIcon
+                                      class="h-4 w-4 shrink-0 pt-1"
+                                      aria-hidden="true" />
+                                    {{ subItem.name }}
+                                  </NuxtLink>
+                                </li>
+                              </DisclosurePanel>
+                            </transition>
                           </Disclosure>
                         </li>
                       </ul>
@@ -190,22 +198,30 @@
                           aria-hidden="true"
                           :class="[open ? 'rotate-90 text-gray-500' : 'text-gray-400', 'ml-auto h-5 w-5 shrink-0']" />
                       </DisclosureButton>
-                      <DisclosurePanel
-                        as="ul"
-                        class="mt-1 px-2">
-                        <li
-                          v-for="subItem in item.children"
-                          :key="subItem.name">
-                          <NuxtLink
-                            :to="subItem.href"
-                            :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
-                            <ChevronRightIcon
-                              class="h-5 w-5 shrink-0 pt-1"
-                              aria-hidden="true" />
-                            {{ subItem.name }}
-                          </NuxtLink>
-                        </li>
-                      </DisclosurePanel>
+                      <transition
+                        enter-active-class="transition duration-300 ease-out"
+                        enter-from-class="transform translate-x-[-100%] opacity-0"
+                        enter-to-class="transform translate-x-0 opacity-100"
+                        leave-active-class="transition duration-200 ease-in"
+                        leave-from-class="transform translate-x-0 opacity-100"
+                        leave-to-class="transform translate-x-[-100%] opacity-0">
+                        <DisclosurePanel
+                          as="ul"
+                          class="mt-1 px-2">
+                          <li
+                            v-for="subItem in item.children"
+                            :key="subItem.name">
+                            <NuxtLink
+                              :to="subItem.href"
+                              :class="[$route.path === subItem.href || $route.path.startsWith(subItem.href) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md py-2 pl-2 pr-2 text-sm leading-6 cursor-pointer']">
+                              <ChevronRightIcon
+                                class="h-5 w-5 shrink-0 pt-1"
+                                aria-hidden="true" />
+                              {{ subItem.name }}
+                            </NuxtLink>
+                          </li>
+                        </DisclosurePanel>
+                      </transition>
                     </Disclosure>
                   </li>
                 </div>

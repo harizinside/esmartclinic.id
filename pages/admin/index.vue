@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-accumulation />
+    <div class="p-1">
+      <v-accumulation />
+    </div>
   </div>
 </template>
 
